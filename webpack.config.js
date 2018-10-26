@@ -18,7 +18,12 @@ module.exports={
             {
                 test:/\.vue$/,
                 loader:'vue-loader'
-            }
+            },
+            {
+                test: /\.css$/,  
+                include: /node_modules/,  
+                loaders: ['style-loader', 'css-loader'],
+           }
         ]
     },
     plugins: [
