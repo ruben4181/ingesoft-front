@@ -1,12 +1,18 @@
 <template>
     <div id="app">
+        <div class="navbar">
+            <a class="active" href="#">Posts</a>
+            <router-link :to="{ name:'Events', params: {} }">Eventos</router-link>
+            <a style="float: right;">Iniciar sesion</a>
+        </div>
         <div class="header">
-            <h3>{{title}}</h3>
+            <h3>{{Program_name}}</h3>
         </div>
         <div class="leftcolumn">
             <div class="card">
                 <h2>Regresa al inicio</h2>
-                <button class="btn default">
+                <button class="btn default"
+                @click="goBack()">
                     Atras
                 </button>
             </div>
@@ -26,12 +32,12 @@
         <div class="rightcolumn">
             <div class="card">
                 <h2>Logros destacados</h2>
-                <p>{{title}} ha tenido estupendos logros, más informacion dandlo click abajo</p>
+                <p>{{Program_name}} ha tenido estupendos logros, más informacion dandlo click abajo</p>
                 <button class="btn default">Ver logros</button>
             </div>
             <div class="card">
                 <h2>¿Quieres conocer el plan de estudios?</h2>
-                <p>{{title}} es tu mejor opcion<br>Haz click en el siguiente enlace para 
+                <p>{{Program_name}} es tu mejor opcion<br>Haz click en el siguiente enlace para 
                 mas informacion acerca del syllabus del programa</p>
                 <button class="btn default"
                 @click="location.href='http://www.google.com';">
@@ -39,15 +45,15 @@
             </div>
             <div class="card">
                 <h2>Conoce tus futuros docentes</h2>
-                <p>Observa el perfil de los docentes inscritos en {{title}}</p>
+                <p>Observa el perfil de los docentes inscritos en {{ Program_name}}</p>
                 <button class="btn default">Ver Docentes</button>
             </div>
             <div class="card">
                 <h2>Modo editor</h2>
                 <p>Ingresa un post para esta seccion haciendo click más abajo</p>
-                <button class="btn default"
-                @click="newPost()">
-                Crear Post
+                <button class="btn default">
+                    <router-link :to="{name: 'NewPost', params:{ID_program: this.id_program, 
+            Program_name: this.Program_name}}">Crear Post</router-link>
                 </button>
             </div>
         </div>
@@ -67,12 +73,23 @@ export default {
             selectedProgram:{
                 ID_program:1
             },
-            urlApi:"http://localhost:8080/"
+            urlApi:"http://localhost:8080/",
+            id_program:1,
+            Program_name:"No program selected"
         }
     },
     methods: {
         getPosts : function(){
-            axios.get(this.urlApi+'getPosts/'+this.selectedProgram.ID_program).then(response=>(this.posts=response.data));
+            this.id_program=this.$route.params.ID_program+1;
+            this.Program_name=this.$route.params.Program_name;
+            //axios.get(this.urlApi+'getPosts/'+this.selectedProgram.ID_program).then(response=>(this.posts=response.data));
+            axios.get(this.urlApi+'getPosts/'+this.id_program).then(response=>(this.posts=response.data));
+        },
+        goBack : function(){
+            this.$router.go(-1);
+        },
+        newPost : function(){
+            this.$router.go(0);
         }
     }
 }

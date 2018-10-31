@@ -8,66 +8,9 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div id="thisnav">
-        <div class="navbar">
-            <a class="active" href="#home">Inicio</a>
-            <a href="#news">Noticias</a>
-            <a style="float: right;">Iniciar sesion</a>
-            <div class="dropdown">
-                <button class="dropbtn">Ver Programas 
-                <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                <div class="header">
-                    <h2>Programas Postgrado Facultad de Ingenieria</h2>
-                </div>   
-                <div class="row">
-                    <div class="column">
-                        <h3>Programas disponibles actuamente</h3>
-                        <a href="#" @click="updateProgamSelected(item)"
-                        v-for="(item, index) in programs">{{item.Program_name}}</a>
-                        <h3>Programas futuramente disponibles</h3>
-                        <a href="#">Ninguno</a>
-                    </div>
-                </div>
-                </div>
-            </div> 
-        </div>
-        <div v-if="someToRender==false">
-            
-        </div>
-    </div>
     <div id="app">
         <router-view/>
     </div>
     <script src="../dist/bundle.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
-    <script>
-        var urlApi='http://localhost:8080/'
-        var app=new Vue({
-            el:'#thisnav',
-            created: function(){
-                axios.defaults.headers.get['Content-Type'] = 'application/json';
-                axios.defaults.withCredentials = true;
-                axios.defaults.crossDomain = true;
-                axios.defaults.headers.post['Content-Type']='application/json';
-                this.getPrograms();
-            },
-            data:{
-                programs:null,
-                selectedProgram:null,
-                someToRender:false
-            },
-            methods:{
-                getPrograms : function(){
-                    axios.get(urlApi+'getPrograms').then(response=>(this.programs=response.data));
-                },
-                updateProgamSelected(selectedProgram){
-                    this.someToRender=true;
-                }
-            }
-        });
-    </script>
 <script type="text/javascript" src="bundle.js"></script></body>
 </html>
