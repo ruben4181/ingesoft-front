@@ -17,7 +17,7 @@
                 </button>
             </div>
             <div id="feeds">
-                <a href="#" @click="seeMore(item)"
+                <router-link :to="{name:'Post', params: {ID_post: item.ID_post}}"
                         v-for="(item, index) in posts"
                         :key="index">
                         <div class="card">
@@ -26,7 +26,7 @@
                             <div class="fakeimg" style="height:150px;">Image</div>
                             <p>{{item.Post_abstract}}</p>
                         </div>
-                </a>
+                </router-link>
             </div>
         </div>
         <div class="rightcolumn">
@@ -51,10 +51,12 @@
             <div class="card">
                 <h2>Modo editor</h2>
                 <p>Ingresa un post para esta seccion haciendo click más abajo</p>
-                <button class="btn default">
-                    <router-link :to="{name: 'NewPost', params:{ID_program: this.id_program, 
-            Program_name: this.Program_name}}">Crear Post</router-link>
-                </button>
+                <router-link :to="{name: 'NewPost', params: { ID_program: this.id_program, 
+                Program_name: this.Program_name}}">
+                    <button class="btn default">
+                        Crear Post
+                    </button>
+                </router-link>
             </div>
         </div>
     </div>
@@ -70,9 +72,6 @@ export default {
     data(){ return {
             title: "Hello World",
             posts: null,
-            selectedProgram:{
-                ID_program:1
-            },
             urlApi:"http://localhost:8080/",
             id_program:1,
             Program_name:"No program selected"
@@ -80,7 +79,8 @@ export default {
     },
     methods: {
         getPosts : function(){
-            this.id_program=this.$route.params.ID_program+1;
+            this.id_program=this.$route.params.ID_program;
+            console.log('ID_program', this.id_program);
             this.Program_name=this.$route.params.Program_name;
             //axios.get(this.urlApi+'getPosts/'+this.selectedProgram.ID_program).then(response=>(this.posts=response.data));
             axios.get(this.urlApi+'getPosts/'+this.id_program).then(response=>(this.posts=response.data));

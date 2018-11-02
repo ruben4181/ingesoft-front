@@ -16,7 +16,7 @@
                     <div class="column">
                         <h3>Programas disponibles actuamente</h3>
                         <router-link 
-                            :to="{ name: 'Posts', params: { ID_program:index, Program_name : item.Program_name } }"
+                            :to="{ name: 'Posts', params: { ID_program:index+1, Program_name : item.Program_name } }"
                             v-for="(item, index) in programs" :key="index">{{item.Program_name}}
                         </router-link>
                         <h3>Programas futuramente disponibles</h3>

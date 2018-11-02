@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" class="card">
         <div class="navbar">
             <a href="#" class="active">Nuevo Post</a>
             <a href="#">Nuevo evento</a>
@@ -21,10 +21,11 @@
                 v-model="Post.Post_body"
                 :min-height="30">
             </textarea-autosize>
-            <button clss="btn default"
-            @click="sendNewPost()">
-                Enviar nuevo Post
-            </button>
+            <router-link :to="{name:'Posts', params:{ID_program:this.Post.ID_program, Program_name:this.Program_name}}">
+                <button class="btn default" @click="sendNewPost()">
+                    Enviar nuevo Post
+                </button>
+            </router-link>
         </div>
     </div>
 </template>
@@ -39,12 +40,17 @@ export default {
         axios.defaults.crossDomain = true;
         axios.defaults.headers.post['Content-Type']='application/json';
         this.auth=true;
+        this.Program_name=this.$route.params.Program_name;
+        this.Post.ID_program=this.$route.params.ID_program;
+        
+        console.log(this.Program_name);
+        console.log(this.Post.ID_program);
     },
     data(){
         return {
             urlApi:"http://localhost:8080",
             Program_name:"",
-            ID_program:null,
+            ID_program:1,
             auth:false,
             Post:{
                 ID_post:1,
@@ -68,7 +74,6 @@ export default {
                 "Content-Type": "application/x-www-form-urlencoded"
                 }
             });
-           console.log(this.Post);
         }
     }
 }
