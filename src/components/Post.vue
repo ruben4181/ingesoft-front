@@ -23,9 +23,11 @@
                 @click="showDelPost()">
                     Eliminar post
                 </button>
-                <button class="btn info">
-                    Editar post
-                </button>
+                <router-link :to="{name: 'EditPost', params: {ID_post: Post.ID_post, ID_program: Post.ID_program, Prgram_name: Program_name}}">
+                    <button class="btn info">
+                        Editar post
+                    </button>
+                </router-link>
             </div>
         </div>
         <modal name="confirm-delete" height="auto">
