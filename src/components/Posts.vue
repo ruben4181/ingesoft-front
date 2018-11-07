@@ -11,10 +11,11 @@
         <div class="leftcolumn">
             <div class="card">
                 <h2>Regresa al inicio</h2>
-                <button class="btn default"
-                @click="goBack()">
-                    Atras
-                </button>
+                <router-link :to="{name:'Home'}">
+                    <button class="btn default">
+                        Atras
+                    </button>
+                </router-link>
             </div>
             <div id="feeds">
                 <router-link :to="{name:'Post', params: {ID_post: item.ID_post}}"
@@ -84,12 +85,6 @@ export default {
             this.Program_name=this.$route.params.Program_name;
             //axios.get(this.urlApi+'getPosts/'+this.selectedProgram.ID_program).then(response=>(this.posts=response.data));
             axios.get(this.urlApi+'getPosts/'+this.id_program).then(response=>(this.posts=response.data));
-        },
-        goBack : function(){
-            this.$router.go(-1);
-        },
-        newPost : function(){
-            this.$router.go(0);
         }
     }
 }

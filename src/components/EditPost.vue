@@ -26,17 +26,23 @@
                 </button>
             </router-link>
             <modal name="confirm-update" height="auto">
-                <h3>¿Deseas realizar la edicion?</h3>
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h3>¿Deseas realizar la edicion?</h3>
+                </div>
+                <div class="modal-body">
                 <p>Si confirmas la edicion los cambios se veran reflejados automaticamente para los usuarios de la pagina</p>
-                <div style="height=100%;">
-                    <button class="btn info"
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default"
                         @click="delPost()" style="width:50%;float:left;">
                         Enviar
                     </button>
-                    <button class="btn default" style="width:50%;float:right;"
+                    <button class="btn bnt-default" style="width:50%;float:right;"
                     @click="cancelDelPost()">
                         Cancelar
                     </button>
+                </div>
                 </div>
             </modal>
         </div>

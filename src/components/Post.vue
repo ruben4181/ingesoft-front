@@ -30,16 +30,20 @@
                 </router-link>
             </div>
         </div>
-        <modal name="confirm-delete" height="auto">
+        <modal name="confirm-delete" class="modal-content" height="auto">
             <div>
-                <h3>¿Seguro deseas eliminar el post '{{Post.Post_title}}'?</h3>
-                <p>Despues que elimines este post no lo podras recuperar de ninguna forma</p>
-                <div style="height=100%;">
-                <button class="btn warning"
-                    @click="delPost()" style="width:50%;float:left;">
+                <div class="modal-header">
+                    <h3 class="modal-title">¿Seguro deseas eliminar el post '{{Post.Post_title}}'?</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Despues que elimines este post no lo podras recuperar de ninguna forma</p>
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-default"
+                    @click="delPost()">
                         Borrar
                     </button>
-                    <button class="btn default" style="width:50%;float:right;"
+                    <button class="btn btn-default"
                     @click="cancelDelPost()">
                         Cancelar
                     </button>
@@ -47,13 +51,17 @@
             </div>
         </modal>
         <modal name="post-deleted" height="auto">
-            <div>
-                <h3>Post borrado exitosamente</h3>
-                <router-link :to="{name:'Posts', params:{ID_program:this.Post.ID_program, Program_name:this.Program_name}}">
-                    <button class="btn default" style="height:100%">
-                        Volver a la pagina principal
-                    </button>
-                </router-link>
+            <div class="modal-content">
+                <div class="modal-header">
+                <h3 class="modal-title">Post borrado exitosamente</h3>
+                </div>
+                <div class="modal-footer">
+                    <router-link :to="{name:'Posts', params:{ID_program:this.Post.ID_program, Program_name:this.Program_name}}">
+                        <button class="btn default">
+                            Volver a la pagina principal
+                        </button>
+                    </router-link>
+                </div>
             </div>
         </modal>
     </div>
