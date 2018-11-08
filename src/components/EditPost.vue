@@ -4,19 +4,19 @@
             <router-link :to="{name:'Home'}" class="active">Atras</router-link>
             <a href="#" style="float:right;">Iniciar Sesion</a>
         </div>
-        <div id="container">
+        <div id="container" class="form-style-2">
             <h3>Titulo</h3>
-            <textarea-autosize
+            <textarea-autosize class="textarea-field" style="width:100%;"
                 v-model="Post.Post_title"
                 :min-height="30">
             </textarea-autosize>
             <h3>Abstract</h3>
-            <textarea-autosize
+            <textarea-autosize class="textarea-field" style="width:100%;"
                 v-model="Post.Post_abstract"
                 :min-height="30">
             </textarea-autosize>
             <h3>Contenido</h3>
-            <textarea-autosize
+            <textarea-autosize class="textarea-field" style="width:100%;"
                 v-model="Post.Post_body"
                 :min-height="30">
             </textarea-autosize>

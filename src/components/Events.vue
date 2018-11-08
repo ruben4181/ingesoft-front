@@ -1,9 +1,9 @@
 <template>
     <div id="app">
         <div class="navbar">
-            <a class="active" href="#">Posts</a>
-            <router-link :to="{ name:'Events', params: {ID_program:this.id_program, Program_name:this.Program_name} }">Eventos</router-link>
+            <router-link :to="{ name:'Posts', params: {} }">Posts</router-link>
             <a style="float: right;">Iniciar sesion</a>
+            <a class="active" href="#">Eventos</a>
         </div>
         <div class="header">
             <h3>{{Program_name}}</h3>
@@ -18,14 +18,15 @@
                 </router-link>
             </div>
             <div id="feeds">
-                <router-link :to="{name:'Post', params: {ID_post: item.ID_post}}"
-                        v-for="(item, index) in posts"
+                <router-link :to="{name:'Post', params: {ID_event: item.ID_event}}"
+                        v-for="(item, index) in events"
                         :key="index">
                         <div class="card">
-                            <h2>{{item.Post_title}}</h2>
-                            <h5>Oct 24, 2018</h5>
+                            <h2>{{item.Event_title}}</h2>
+                            <h5>Publicado: {{item.Event_date_relased}} {{item.Event_time_relased}}</h5>
                             <div class="fakeimg" style="height:150px;">Image</div>
-                            <p>{{item.Post_abstract}}</p>
+                            <p>{{item.Event_abstract}}</p>
+                            <h5>Fecha: {{item.Event_date}} Hora: {{item.Event_time}}</h5>
                         </div>
                 </router-link>
             </div>
@@ -51,11 +52,11 @@
             </div>
             <div class="card">
                 <h2>Modo editor</h2>
-                <p>Ingresa un post para esta seccion haciendo click más abajo</p>
-                <router-link :to="{name: 'NewPost', params: { ID_program: this.id_program, 
+                <p>Ingresa un evento para esta seccion haciendo click más abajo</p>
+                <router-link :to="{name: 'NewEvent', params: { ID_program: this.id_program, 
                 Program_name: this.Program_name}}">
                     <button class="btn default">
-                        Crear Post
+                        Crear evento
                     </button>
                 </router-link>
             </div>
@@ -72,7 +73,7 @@ export default {
     },
     data(){ return {
             title: "Hello World",
-            posts: null,
+            events: null,
             urlApi:"http://localhost:8080/",
             id_program:1,
             Program_name:"No program selected"
@@ -84,7 +85,7 @@ export default {
             console.log('ID_program', this.id_program);
             this.Program_name=this.$route.params.Program_name;
             //axios.get(this.urlApi+'getPosts/'+this.selectedProgram.ID_program).then(response=>(this.posts=response.data));
-            axios.get(this.urlApi+'getPosts/'+this.id_program).then(response=>(this.posts=response.data));
+            axios.get(this.urlApi+'getEvents/'+this.id_program).then(response=>(this.events=response.data));
         }
     }
 }

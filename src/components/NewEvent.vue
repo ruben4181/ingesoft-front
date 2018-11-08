@@ -1,8 +1,8 @@
 <template>
     <div id="app" class="card">
         <div class="navbar">
-            <a href="#" class="active">Nuevo Post</a>
-            <a href="#">Nuevo evento</a>
+            <a href="#" class>Nuevo Post</a>
+            <a href="#" class="active">Nuevo evento</a>
             <a href="#" style="float:right;">Iniciar Sesion</a>
         </div>
         <div id="container" class="form-style-2">
@@ -21,9 +21,25 @@
                 v-model="Post.Post_body"
                 :min-height="30">
             </textarea-autosize>
-            <button class="btn default" @click="showNewPostModal()">
-                Enviar nuevo Post
+            <button class="btn default" @click="console.log(datetimeEmpty)">
+                Enviar nuevo Evento
             </button>
+            <datetime
+                type="datetime"
+                v-model="datetimeEmpty"
+                input-class="my-class"
+                value-zone="America/Colombia"
+                zone="America/Colombia"
+                :format="{ year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }"
+                :phrases="{ok: 'Continue', cancel: 'Exit'}"
+                :hour-step="2"
+                :minute-step="15"
+                :min-datetime="minDatetime"
+                :max-datetime="maxDatetime"
+                :week-start="1"
+                use12-hour
+                auto>
+            </datetime>
         </div>
         <modal name="confirm-newpost" height="auto">
             <div class="modal-content">
