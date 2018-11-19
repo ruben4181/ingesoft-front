@@ -83,7 +83,15 @@ export default {
             Program_name:"No program selected",
             days:[],
             months:[],
-            eventsCalendar:[]
+            years:[],
+            monthsNames:['Enero', 'Febrero', 'Marzo', 'Abril','Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            eventsCalendar:[],
+            masterItem:{
+                year:"",
+                months:[{
+                    days:[]
+                }]
+            }
         }
     },
     methods: {
@@ -96,9 +104,8 @@ export default {
         },
         buildCalendar : function(){
             for(var i=0;i<this.events.length;i++){
-                console.log(this.events[i].Event_date);
                 var item=this.events[i];
-                if(this.days.length=0){
+                if(this.days.length==0){
                     this.days.push(item.Event_date);
                 }else{
                     if(!this.days.includes(item.Event_date)){
@@ -106,8 +113,44 @@ export default {
                     }
                 }
             }
-            for(var i=0; i<this.days.length;i++){
-                console.log(this.days[i].Event_date);
+            for(var i=0; i<this.days.length; i++){
+                var item=this.days[i];
+                if(this.months.length==0){
+                    this.months.push(item.substr(0,7))
+                }else{
+                    if(!this.months.includes(item.substr(0, 7))){
+                        this.months.push(item.substr(0, 7));
+                    }
+                }
+            }
+            for(var i=0; i<this.months.length; i++){
+                var item=this.months[i];
+                if(this.years.length==0){
+                    this.years.push(item.substr(0,4));
+                }else{
+                    if(!this.years.includes(item.substr(0,4))){
+                        this.years.push(item.substr(0,4));
+                    }
+                }
+            }
+            for(var i=0; i<this.years.length;i++){
+                this.masterItem.year=this.years[i];
+                for(var j=0;j<this.months.length;j++){
+                    if(this.months[j].substr(0,4)==this.masterItem.year){
+                        if(!this.masterItem.months.includes(this.months[j])){
+                            this.masterItem.months.push(this.months[j]);   
+                        }
+                    }
+                }
+                for(var j=0;j<this.masterItem.months;j++){
+                    for(var k=0;k<this.days;k++){
+                        if(this.days[k].substr(0,7)==this.masterItem.months[j]){
+                            if(!this.masterItem.months.includes(this.days[k])){
+                                this.masterItem.months.push(this.days[k]);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
