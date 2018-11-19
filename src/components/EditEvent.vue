@@ -1,8 +1,7 @@
 <template>
     <div id="app" class="card">
         <div class="navbar">
-            <a href="#" class>Nuevo Post</a>
-            <a href="#" class="active">Nuevo evento</a>
+            <router-link :to="{name:'Home'}" class="active">Atras</router-link>
             <a href="#" style="float:right;">Iniciar Sesion</a>
         </div>
         <div id="container" class="form-style-2">
@@ -30,51 +29,32 @@
                 v-model="Event.Event_time"
                 :min-height="30">
             </textarea-autosize>
-            <button class="btn default" @click="showNewEventModal">
-                Enviar nuevo Evento
-            </button>
-        </div>
-        <modal name="confirm-newpost" height="auto">
-            <div class="modal-content">
+            <router-link :to="{name:'Events', params:{ID_program:this.Event.ID_program, Program_name:this.Program_name}}">
+                <button class="btn default" @click="sendNewEvent()">
+                    Editar nuevo Post
+                </button>
+            </router-link>
+            <modal name="confirm-update" height="auto">
+                <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title">¿Desea enviar este nuevo Post?</h3>
+                    <h3>¿Deseas realizar la edicion?</h3>
                 </div>
                 <div class="modal-body">
-                    <p>Si confirma el envio de este Post sera enviado directamente a la seccion de Post y será visible para 
-                        los usuarios de inmediato
-                    </p>
+                <p>Si confirmas la edicion los cambios se veran reflejados automaticamente para los usuarios de la pagina</p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-default"
-                    @click="sendNewEvent()">
+                        @click="delPost()" style="width:50%;float:left;">
                         Enviar
                     </button>
-                    <button class="btn btn-default"
-                    @click="cancelNewEvent()">
+                    <button class="btn bnt-default" style="width:50%;float:right;"
+                    @click="cancelDelPost()">
                         Cancelar
                     </button>
                 </div>
-            </div>
-        </modal>
-        <modal name="newpost-added" height="auto">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">Un nuevo post ha sido añadido</h3>
                 </div>
-                <div class="modal-body">
-                    <p> 
-                        Su post ha sido creado correctamente
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <router-link :to="{name:'Posts', params:{ID_program:this.Event.ID_program, Program_name:this.Program_name}}">
-                        <button class="btn btn-default">
-                            Ok
-                        </button>
-                    </router-link>
-                </div>
-            </div>
-        </modal>
+            </modal>
+        </div>
     </div>
 </template>
 <script>
@@ -90,13 +70,12 @@ export default {
         this.auth=true;
         this.Program_name=this.$route.params.Program_name;
         this.Event.ID_program=this.$route.params.ID_program;
-        
-        console.log(this.Program_name);
-        console.log(this.Event.ID_program);
+        this.Event.ID_event=this.$route.params.ID_event;
+        this.fullOldEvent();
     },
     data(){
         return {
-            urlApi:"http://localhost:8080",
+            urlApi:"http://localhost:8080/",
             Program_name:"",
             ID_program:1,
             auth:false,
@@ -116,10 +95,9 @@ export default {
     },
     methods:{
         sendNewEvent: function(){
-            this.$modal.hide('confirm-newpost');
             axios({
                 method: 'post',
-                url: 'http://localhost:8080/newEvent',
+                url: 'http://localhost:8080/updateEvent',
                 withCredentials: true,
                 crossdomain: true,
                 data: this.Event,
@@ -127,15 +105,10 @@ export default {
                 "Content-Type": "application/x-www-form-urlencoded"
                 }
             });
-            this.$modal.show('newpost-added');
         },
-        showNewEventModal : function(){
-            this.$modal.show("confirm-newpost");
-        },
-        cancelNewEvent : function(){
-            this.$modal.hide("confirm-newpost");
+        fullOldEvent: function(){
+            axios.get(this.urlApi+'getEvent/'+this.Event.ID_event).then(response=>(this.Event=response.data));
         }
     }
 }
-
 </script>

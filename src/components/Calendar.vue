@@ -3,10 +3,11 @@
         <div class="navbar">
             <router-link :to="{ name:'Posts', params: {ID_program:this.id_program, Program_name:this.Program_name}}">Posts</router-link>
             <a style="float: right;">Iniciar sesion</a>
-            <a class="active" href="#">Eventos</a>
+            <router-link :to="{ name:'Events', params: {ID_program:this.id_program, Program_name:this.Program_name}}">Events</router-link>
         </div>
         <div class="header">
             <h3>{{Program_name}}</h3>
+            <h6>Programacion de actividades</h6>
         </div>
         <div class="leftcolumn">
             <div class="card">
@@ -14,11 +15,6 @@
                 <router-link :to="{name:'Home'}">
                     <button class="btn default">
                         Atras
-                    </button>
-                </router-link>
-                <router-link :to="{name:'Calendar', params:{ID_program:this.id_program, Program_name:this.Program_name}}">
-                    <button class="btn default">
-                        Calendario actividades
                     </button>
                 </router-link>
             </div>
@@ -74,23 +70,45 @@ import axios from 'axios';
 
 export default {
     created: function(){
-        this.getPosts();
+        this.getEvents();
+    },
+    beforeUpdate:function(){
+        this.buildCalendar();
     },
     data(){ return {
             title: "Hello World",
             events: null,
             urlApi:"http://localhost:8080/",
             id_program:1,
-            Program_name:"No program selected"
+            Program_name:"No program selected",
+            days:[],
+            months:[],
+            eventsCalendar:[]
         }
     },
     methods: {
-        getPosts : function(){
+        getEvents : function(){
             this.id_program=this.$route.params.ID_program;
             console.log('ID_program', this.id_program);
             this.Program_name=this.$route.params.Program_name;
-            //axios.get(this.urlApi+'getPosts/'+this.selectedProgram.ID_program).then(response=>(this.posts=response.data));
+            //axios.get(this.urlApi+'getEvents/'+this.selectedProgram.ID_program).then(response=>(this.posts=response.data));
             axios.get(this.urlApi+'getEvents/'+this.id_program).then(response=>(this.events=response.data));
+        },
+        buildCalendar : function(){
+            for(var i=0;i<this.events.length;i++){
+                console.log(this.events[i].Event_date);
+                var item=this.events[i];
+                if(this.days.length=0){
+                    this.days.push(item.Event_date);
+                }else{
+                    if(!this.days.includes(item.Event_date)){
+                        this.days.push(item.Event_date);
+                    }
+                }
+            }
+            for(var i=0; i<this.days.length;i++){
+                console.log(this.days[i].Event_date);
+            }
         }
     }
 }

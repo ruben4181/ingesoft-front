@@ -5,6 +5,9 @@ import Post from './components/Post.vue';
 import EditPost from './components/EditPost.vue';
 import Events from './components/Events.vue';
 import NewEvent from './components/NewEvent.vue';
+import Event from './components/Event.vue';
+import EditEvent from './components/EditEvent.vue';
+import Calendar from './components/Calendar.vue';
 
 export default[
     {path:'/', component: Home, name:'Home'},
@@ -13,5 +16,8 @@ export default[
     {path:'/Post', component: Post, name:'Post'},
     {path:'/EditPost', component: EditPost, name: 'EditPost'},
     {path:'/Events', component: Events, name:'Events'},
-    {path:'/NewEvent', component: Event, name:'NewEvent'}
+    {path:'/NewEvent', component: NewEvent, name:'NewEvent'},
+    {path:'/Event', component:Event, name:'Event'},
+    {path:'/EditEvent', component:EditEvent, name:'EditEvent'},
+    {path:'/Calendar', component:Calendar, name:'Calendar'}
 ]
