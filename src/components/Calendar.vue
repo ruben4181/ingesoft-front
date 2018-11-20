@@ -19,17 +19,24 @@
                 </router-link>
             </div>
             <div id="feeds">
-                <router-link :to="{name:'Event', params: {ID_event: item.ID_event}}"
-                        v-for="(item, index) in events"
-                        :key="index">
-                        <div class="card">
-                            <h2>{{item.Event_title}}</h2>
-                            <h5>Publicado: {{item.Event_date_relased}} {{item.Event_time_relased}}</h5>
-                            <div class="fakeimg" style="height:150px;">Image</div>
-                            <p>{{item.Event_abstract}}</p>
-                            <h5>Fecha: {{item.Event_date}} Hora: {{item.Event_time}}</h5>
+                <div class="smallcard" 
+                v-for="(item, index) in eventsCalendar" :key="index">
+                    <h3>{{item.year}}</h3>
+                    <div class="smallcard"
+                    v-for="(month, index2) in item.months" :key="index2">
+                        <h4>{{month.name}}</h4>
+                        <div class="dayclass"
+                        v-for="(dayItem, index3) in month.days" :key="index3">
+                            <h5>{{dayItem.day}}</h5>
+                            <router-link :to="{name:'Event', params: {ID_event: eventItem.ID_event}}"
+                            v-for="(eventItem, index4) in getEventsInDate(dayItem.original)" :key="index4"
+                            class="calendarlink">
+                                <h6>{{eventItem.Event_title}}</h6>
+                                <h6>{{eventItem.Event_time}}</h6>
+                            </router-link>
                         </div>
-                </router-link>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="rightcolumn">
@@ -72,9 +79,6 @@ export default {
     created: function(){
         this.getEvents();
     },
-    beforeUpdate:function(){
-        this.buildCalendar();
-    },
     data(){ return {
             title: "Hello World",
             events: null,
@@ -86,12 +90,6 @@ export default {
             years:[],
             monthsNames:['Enero', 'Febrero', 'Marzo', 'Abril','Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
             eventsCalendar:[],
-            masterItem:{
-                year:"",
-                months:[{
-                    days:[]
-                }]
-            }
         }
     },
     methods: {
@@ -100,7 +98,7 @@ export default {
             console.log('ID_program', this.id_program);
             this.Program_name=this.$route.params.Program_name;
             //axios.get(this.urlApi+'getEvents/'+this.selectedProgram.ID_program).then(response=>(this.posts=response.data));
-            axios.get(this.urlApi+'getEvents/'+this.id_program).then(response=>(this.events=response.data));
+            axios.get(this.urlApi+'getEvents/'+this.id_program).then((response)=>{this.events=response.data;this.buildCalendar()});
         },
         buildCalendar : function(){
             for(var i=0;i<this.events.length;i++){
@@ -134,24 +132,48 @@ export default {
                 }
             }
             for(var i=0; i<this.years.length;i++){
-                this.masterItem.year=this.years[i];
+                var mItem={ year:"", months:[]}
+                mItem.year=this.years[i];
                 for(var j=0;j<this.months.length;j++){
-                    if(this.months[j].substr(0,4)==this.masterItem.year){
-                        if(!this.masterItem.months.includes(this.months[j])){
-                            this.masterItem.months.push(this.months[j]);   
+                    if(this.months[j].substr(0,4)==mItem.year){
+                        mItem.months.push(
+                            {name:this.getMonthName(this.months[j].substr(5,2)), original:this.months[j], days:[]});
+                    }
+                }
+                for(var j=0; j<mItem.months.length;j++){
+                    for(var k=0; k<this.days.length;k++){
+                        if(this.days[k].substr(0,7)==mItem.months[j].original){
+                            mItem.months[j].days.push({day:this.days[k].substr(8,2), original:this.days[k]});
                         }
                     }
                 }
-                for(var j=0;j<this.masterItem.months;j++){
-                    for(var k=0;k<this.days;k++){
-                        if(this.days[k].substr(0,7)==this.masterItem.months[j]){
-                            if(!this.masterItem.months.includes(this.days[k])){
-                                this.masterItem.months.push(this.days[k]);
-                            }
-                        }
-                    }
+                this.eventsCalendar.push(mItem);
+            }
+            console.log("Numero de años "+this.eventsCalendar.length);
+        },
+        getMonthName : function(str){
+            if(str=="01"){ return this.monthsNames[0];}
+            if(str=="02"){ return this.monthsNames[1];}
+            if(str=="03"){ return this.monthsNames[2];}
+            if(str=="04"){ return this.monthsNames[3];}
+            if(str=="05"){ return this.monthsNames[4];}
+            if(str=="06"){ return this.monthsNames[5];}
+            if(str=="07"){ return this.monthsNames[6];}
+            if(str=="08"){ return this.monthsNames[7];}
+            if(str=="09"){ return this.monthsNames[8];}
+            if(str=="10"){ return this.monthsNames[9];}
+            if(str=="11"){ return this.monthsNames[10];}
+            if(str=="12"){ return this.monthsNames[11];}
+            return "error";
+        },
+        getEventsInDate(str){
+            var events=[];
+            for(var i=0; i<this.events.length; i++){
+                if(str==this.events[i].Event_date){
+                    events.push(this.events[i]);
                 }
             }
+            return events;
         }
     }
 }
