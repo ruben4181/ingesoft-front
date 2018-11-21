@@ -32,22 +32,20 @@
         </div>
         <div class="rightcolumn">
             <div class="card">
-                <h2>Logros destacados</h2>
-                <p>{{Program_name}} ha tenido estupendos logros, más informacion dandlo click abajo</p>
-                <button class="btn default">Ver logros</button>
-            </div>
-            <div class="card">
                 <h2>¿Quieres conocer el plan de estudios?</h2>
                 <p>{{Program_name}} es tu mejor opcion<br>Haz click en el siguiente enlace para 
                 mas informacion acerca del syllabus del programa</p>
-                <button class="btn default"
-                @click="location.href='http://www.google.com';">
-                Ver Syllabus</button>
+                <router-link :to="{name:'Courses', params:{ID_program:id_program, Program_name:Program_name}}">
+                <button class="btn default">
+                    Ver Syllabus</button>
+                </router-link>
             </div>
             <div class="card">
                 <h2>Conoce tus futuros docentes</h2>
                 <p>Observa el perfil de los docentes inscritos en {{ Program_name}}</p>
-                <button class="btn default">Ver Docentes</button>
+                <router-link :to="{name:'Teachers', params:{ID_program:id_program, Program_name:Program_name}}">
+                    <button class="btn default">Ver Docentes</button>
+                </router-link>
             </div>
             <div class="card">
                 <h2>Modo editor</h2>

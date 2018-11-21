@@ -8,6 +8,10 @@ import NewEvent from './components/NewEvent.vue';
 import Event from './components/Event.vue';
 import EditEvent from './components/EditEvent.vue';
 import Calendar from './components/Calendar.vue';
+import Teachers from './components/Teachers.vue';
+import Courses from './components/Courses.vue';
+import NewTeacher from './components/NewTeacher.vue';
+import Teacher from './components/Teacher.vue';
 
 export default[
     {path:'/', component: Home, name:'Home'},
@@ -19,5 +23,9 @@ export default[
     {path:'/NewEvent', component: NewEvent, name:'NewEvent'},
     {path:'/Event', component:Event, name:'Event'},
     {path:'/EditEvent', component:EditEvent, name:'EditEvent'},
-    {path:'/Calendar', component:Calendar, name:'Calendar'}
+    {path:'/Calendar', component:Calendar, name:'Calendar'},
+    {path:'/Teachers', component:Teachers, name:'Teachers'},
+    {path:'/Courses', component:Courses, name:'Courses'},
+    {path:'/NewTeacher', component:NewTeacher, name:'NewTeacher'},
+    {path:'/Teacher', component:Teacher, name:'Teacher'}
 ]
