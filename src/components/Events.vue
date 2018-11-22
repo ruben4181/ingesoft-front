@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         <div class="navbar">
+            <router-link :to="{name:'Home'}">Inicio</router-link>
             <router-link :to="{ name:'Posts', params: {ID_program:this.id_program, Program_name:this.Program_name}}">Posts</router-link>
             <a style="float: right;">Iniciar sesion</a>
             <a class="active" href="#">Eventos</a>
@@ -10,13 +11,7 @@
         </div>
         <div class="leftcolumn">
             <div class="card">
-                <h2>Regresa al inicio</h2>
-                <router-link :to="{name:'Home'}">
-                    <button class="btn default">
-                        Atras
-                    </button>
-                </router-link>
-                <router-link :to="{name:'Calendar', params:{ID_program:this.id_program, Program_name:this.Program_name}}">
+                <router-link :to="{name:'Calendar', params:{ID_program:this.id_program, Program_name:this.Program_name}, rutas:rutas}">
                     <button class="btn default">
                         Calendario actividades
                     </button>
@@ -38,28 +33,29 @@
         </div>
         <div class="rightcolumn">
             <div class="card">
-                <h2>Logros destacados</h2>
-                <p>{{Program_name}} ha tenido estupendos logros, más informacion dandlo click abajo</p>
-                <button class="btn default">Ver logros</button>
             </div>
             <div class="card">
                 <h2>¿Quieres conocer el plan de estudios?</h2>
                 <p>{{Program_name}} es tu mejor opcion<br>Haz click en el siguiente enlace para 
                 mas informacion acerca del syllabus del programa</p>
-                <button class="btn default"
-                @click="location.href='http://www.google.com';">
-                Ver Syllabus</button>
+                <router-link :to="{name:'Courses', params:{ID_program:this.id_program, Program_name:this.Program_name, rutas:this.rutas}}">
+                    <button class="btn default">
+                        Ver Syllabus
+                    </button>
+                </router-link>
             </div>
             <div class="card">
                 <h2>Conoce tus futuros docentes</h2>
                 <p>Observa el perfil de los docentes inscritos en {{ Program_name}}</p>
-                <button class="btn default">Ver Docentes</button>
+                <router-link :to="{name:'Teachers', parmas:{ID_program:this.id_program, Program_name:this.Program_name, rutas:this.rutas}}"> 
+                    <button class="btn default">Ver Docentes</button>
+                </router-link>
             </div>
             <div class="card">
                 <h2>Modo editor</h2>
                 <p>Ingresa un evento para esta seccion haciendo click más abajo</p>
                 <router-link :to="{name: 'NewEvent', params: { ID_program: this.id_program, 
-                Program_name: this.Program_name}}">
+                Program_name: this.Program_name}, rutas:rutas}">
                     <button class="btn default">
                         Crear evento
                     </button>
@@ -81,15 +77,15 @@ export default {
             events: null,
             urlApi:"http://localhost:8080/",
             id_program:1,
-            Program_name:"No program selected"
+            Program_name:"No program selected",
+            rutas:[{name:'Home'}]
         }
     },
     methods: {
         getPosts : function(){
             this.id_program=this.$route.params.ID_program;
-            console.log('ID_program', this.id_program);
             this.Program_name=this.$route.params.Program_name;
-            //axios.get(this.urlApi+'getPosts/'+this.selectedProgram.ID_program).then(response=>(this.posts=response.data));
+            this.rutas.push({name:'Events', params:{ID_program:this.id_program, Program_name:this.Program_name}});
             axios.get(this.urlApi+'getEvents/'+this.id_program).then(response=>(this.events=response.data));
         }
     }

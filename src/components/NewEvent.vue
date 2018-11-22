@@ -34,7 +34,7 @@
                 Enviar nuevo Evento
             </button>
         </div>
-        <modal name="confirm-newpost" height="auto">
+        <modal name="confirm-newpost" height="auto" :adaptive="true" :scroll="true">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">¿Desea enviar este nuevo Post?</h3>
@@ -56,7 +56,7 @@
                 </div>
             </div>
         </modal>
-        <modal name="newpost-added" height="auto">
+        <modal name="newpost-added" height="auto" :adaptive="true" :scroll="true">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">Un nuevo post ha sido añadido</h3>
@@ -67,7 +67,7 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <router-link :to="{name:'Posts', params:{ID_program:this.Event.ID_program, Program_name:this.Program_name}}">
+                    <router-link :to="{name:'Posts', params:{ID_program:this.Event.ID_program, Program_name:this.Program_name, rutas:rutas}}">
                         <button class="btn btn-default">
                             Ok
                         </button>

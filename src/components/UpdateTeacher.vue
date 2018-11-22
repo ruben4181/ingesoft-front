@@ -187,8 +187,9 @@ export default {
 
         this.id_program=this.$route.params.ID_program;
         this.Program_name=this.$route.params.Program_name;
+        this.Teacher=this.$route.params.Teacher;
+        console.log(this.Teacher);
         this.rutas=this.$route.params.rutas;
-        this.Teacher.ID_program=this.id_program;
         var i=0;
         for(i; i<this.rutas.length; i++){
             if(this.rutas[i].name=='NewTeacher'){
@@ -198,7 +199,6 @@ export default {
         if(i<this.rutas.length){
             this.rutas.splice(i, this.rutas.length-i);
         }
-        this.rutas.push({name:'NewTeacher', params:{ID_program:this.id_program, Program_name:this.Program_name, rutas:this.rutas}})
     },
     data: function(){
         return {
@@ -239,7 +239,7 @@ export default {
             this.$modal.hide('confirm-newteacher');
             axios({
                 method: 'post',
-                url: 'http://localhost:8080/newTeacher',
+                url: 'http://localhost:8080/updateTeacher',
                 withCredentials: true,
                 crossdomain: true,
                 data: this.Teacher,
@@ -260,7 +260,7 @@ export default {
             this.$modal.show('add-achievement')
         },
         addNewDegree : function(){
-            this.Teacher.Degrees.push({ID_degree:1, ID_teacher:1, Degree_name:this.degree_name, 
+            this.Teacher.Degrees.push({ID_degree:-1, ID_teacher:1, Degree_name:this.degree_name, 
             degree_college:this.degree_college, Degree_city:this.degree_city, Degree_year:this.degree_year, Degree_extra_info:this.degree_extra});
             this.isMTDegrees=false;
             this.degree_name="";
@@ -274,7 +274,7 @@ export default {
             this.Teacher.Degrees.splice(index, 1);
         },
         addNewAchievement : function(){
-            this.Teacher.Achievements.push({ID_achievement:1, ID_teacher:1, Achievement_name:this.achievement_name, 
+            this.Teacher.Achievements.push({ID_achievement:-1, ID_teacher:1, Achievement_name:this.achievement_name, 
                 Achievement_description:this.achievement_description, Achievement_year:this.achievement_year});
             this.isMTAchievements=false;
             this.achievement_name="";

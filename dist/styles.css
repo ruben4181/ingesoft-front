@@ -13,6 +13,12 @@ body {
   text-align: center;
   color:white;
   background: #013088;
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+
+}
+
+.header h3{
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .navbar {
@@ -246,12 +252,14 @@ router-link {
   background-color: white;
   padding: 20px;
   margin-top: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .smallcard {
     background-color: white;
     padding: 10px;
     margin-top: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .dayclass{
@@ -483,8 +491,8 @@ img.avatar {
 
 /* Add padding to containers */
 .container-right {
-    padding: 16px;
-    width:70%;
+    border: 3px solid #f1f1f1;
+    width:68%;
     float:right;
 }
 
