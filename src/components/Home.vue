@@ -81,6 +81,7 @@ export default {
             for(var i=0; i<this.programs.lenght; i++){
                 if(this.programs[i].program_type="Especializacion"){
                     especializaciones.push(this.programs[i]);
+                    console.log(this.programs[i])
                 }
             }
             return especializaciones;
@@ -90,6 +91,7 @@ export default {
             for(var i=0; i<this.programs.lenght; i++){
                 if(this.programs[i].program_type="Maestria"){
                     maestrias.push(this.programs[i]);
+                    console.log(this.programs[i])
                 }
             }
             return maestrias;
@@ -97,8 +99,10 @@ export default {
         getDoctorados(){
             var doctorados=[];
             for(var i=0; i<this.programs.lenght; i++){
+                console.log(this.programs[i])
                 if(this.programs[i].program_type="Doctorado"){
                     doctorados.push(this.programs[i]);
+                    console.log(this.programs[i])
                 }
             }
             return doctorados;
