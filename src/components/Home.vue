@@ -14,13 +14,21 @@
                 </div>   
                 <div class="row">
                     <div class="column">
-                        <h3>Programas disponibles actuamente</h3>
+                        <h3>Especializaciones</h3>
                         <router-link 
                             :to="{ name: 'Posts', params: { ID_program:index+1, Program_name : item.Program_name } }"
-                            v-for="(item, index) in programs" :key="index">{{item.Program_name}}
+                            v-for="(item, index) in getEspecializaciones()" :key="index">{{item.Program_name}}
                         </router-link>
-                        <h3>Programas futuramente disponibles</h3>
-                        <a href="#">Ninguno</a>
+                        <h3>Maestrias</h3>
+                        <router-link 
+                            :to="{ name: 'Posts', params: { ID_program:index+1, Program_name : item.Program_name } }"
+                            v-for="(item, index) in getMaestrias()" :key="index">{{item.Program_name}}
+                        </router-link>
+                        <h3>Doctorados</h3>
+                        <router-link 
+                            :to="{ name: 'Posts', params: { ID_program:index+1, Program_name : item.Program_name } }"
+                            v-for="(item, index) in getDoctorados()" :key="index">{{item.Program_name}}
+                        </router-link>
                     </div>
                 </div>
                 </div>
@@ -57,8 +65,8 @@ export default {
     data() {
         return {
             title: "Hello World",
-            programs:null,
-            selectedProgram:null,
+            programs:[],
+            selectedProgram:"",
             urlApi:"http://localhost:8080/",
         }
     }, methods:{
@@ -67,6 +75,33 @@ export default {
         },
         updateProgamSelected(selectedProgram){
             const userId = 1;
+        },
+        getEspecializaciones(){
+            var especializaciones=[];
+            for(var i=0; i<this.programs.lenght; i++){
+                if(this.programs[i].program_type="Especializacion"){
+                    especializaciones.push(this.programs[i]);
+                }
+            }
+            return especializaciones;
+        },
+        getMaestrias(){
+            var maestrias=[];
+            for(var i=0; i<this.programs.lenght; i++){
+                if(this.programs[i].program_type="Maestria"){
+                    maestrias.push(this.programs[i]);
+                }
+            }
+            return maestrias;
+        },
+        getDoctorados(){
+            var doctorados=[];
+            for(var i=0; i<this.programs.lenght; i++){
+                if(this.programs[i].program_type="Doctorado"){
+                    doctorados.push(this.programs[i]);
+                }
+            }
+            return doctorados;
         }
     }
 }

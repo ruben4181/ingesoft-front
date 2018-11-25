@@ -28,6 +28,15 @@
                     <button class="btn default">Ver Docentes</button>
                 </router-link>
             </div>
+            <div class="smallcard">
+            <h3>¿Deseas agregar un nuevo curso?</h3>
+            <p>Crea un curso nuevo para este programa clickando más abajo</p>
+            <router-link :to="{name:'NewCourse', params:{ID_program:id_program, Program_name:Program_name, rutas:rutas}}">
+                <button class="btn default">
+                    Nuevo curso
+                </button>
+            </router-link>
+        </div>
         </div>
     </div>
 </template>
@@ -37,6 +46,7 @@ import axios from 'axios';
 export default {
     created: function(){
         this.getCourses();
+        console.log(this.id_program)
     },
     data: function(){
         return {

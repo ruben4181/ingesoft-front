@@ -16,24 +16,70 @@
             <p>Creditos: {{course.Course_n_credits}}</p>
             <p>Descripcción: {{course.Course_description}}</p>
             <p>Requisitos: {{course.Course_requirements}}</p>
-        </div>
-    </div>
-    <div class="rightcolumn">
-        <div class="card">
-            <h3>¿Deseas agregar un nuevo curso?</h3>
-            <p>Crea un curso nuevo para este programa clickando más abajo</p>
-            <router-link :to="{name:'NewCourse', params:{ID_program:id_program, Program_name:Program_name, rutas:rutas}}">
-                <button class="btn default">
-                    Nuevo curso
+            <div id="editor">
+                <router-link :to="{name:'EditCourse', params:{ID_program:id_program, Program_name:Program_name, rutas:rutas, Course:course}}">
+                    <button class="btn default">
+                        Editar
+                    </button>
+                </router-link>
+                <button class="btn default" @click="showDelCourseModal()">
+                    Eliminar
                 </button>
-            </router-link>
+            </div>
         </div>
+        
     </div>
+    <modal name="confirm-delcourse" height="auto" :adaptive="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">¿Deseas eliminar este curso?</h3>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Si eliminas este curso no podras recuperarlo de ninguna forma. Los cambios se veran reflejados de 
+                    manera inmediata en el sistema.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default"
+                    @click="delCourse()">
+                    Eliminar
+                </button>
+                <button class="btn btn-default">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </modal>
+    <modal name="course-deleted" height="auto" :adaptive="true" :scroll="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Curso borrado</h3>
+            </div>
+            <div class="modal-body">
+                <p>El curso fue borrado de manera exitosa</p>
+            </div>
+            <dir class="modal-footer">
+                <router-link :to="{name:'Courses', params:{ID_program:id_program, Program_name:Program_name, rutas:rutas}}">
+                    <button calss="btn btn-default">
+                        Ok
+                    </button>
+                </router-link>
+            </dir>
+        </div>
+    </modal>
 </div>   
 </template>
 <script>
+import axios from 'axios'
+
 export default {
     created: function(){
+        axios.defaults.headers.get['Content-Type'] = 'application/json';
+        axios.defaults.withCredentials = true;
+        axios.defaults.crossDomain = true;
+        axios.defaults.headers.post['Content-Type']='application/json';
+
         this.id_program=this.$route.params.ID_program;
         this.Program_name=this.$route.params.Program_name;
         this.course=this.$route.params.Course;
@@ -58,5 +104,27 @@ export default {
             rutas:[]
         }
     },
+    methods:{
+        showDelCourseModal: function(){
+            this.$modal.show('confirm-delcourse');
+        },
+        cancelDelCourseModal : function(){
+            this.$modal.hide('confirm-delcourse');
+        },
+        delCourse : function(){
+            this.$modal.hide('confirm-delcourse');
+            axios({
+                method: 'post',
+                url: 'http://localhost:8080/delCourse',
+                withCredentials: true,
+                crossdomain: true,
+                data: this.course,
+                headers: { 
+                "Content-Type": "application/x-www-form-urlencoded"
+                }
+            });
+            this.$modal.show('course-deleted');
+        }
+    }
 }
 </script>

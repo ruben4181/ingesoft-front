@@ -14,6 +14,8 @@ import NewTeacher from './components/NewTeacher.vue';
 import Teacher from './components/Teacher.vue';
 import Course from './components/Course.vue';
 import UpdateTeacher from './components/UpdateTeacher.vue';
+import NewCourse from './components/NewCourse.vue';
+import EditCourse from './components/EditCourse.vue';
 
 export default[
     {path:'/', component: Home, name:'Home'},
@@ -31,5 +33,7 @@ export default[
     {path:'/NewTeacher', component:NewTeacher, name:'NewTeacher'},
     {path:'/Teacher', component:Teacher, name:'Teacher'},
     {path:'/Course', component:Course, name:'Course'},
-    {path:'/UpdateTeacher', component:UpdateTeacher, name:'UpdateTeacher'}
+    {path:'/UpdateTeacher', component:UpdateTeacher, name:'UpdateTeacher'},
+    {path:'/NewCourse', component:NewCourse, name:'NewCourse'},
+    {path:'/EditCourse', component:EditCourse, name:'EditCourse'}
 ]

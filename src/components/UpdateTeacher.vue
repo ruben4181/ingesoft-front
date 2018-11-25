@@ -136,7 +136,7 @@
         <modal name="confirm-newteacher" height="auto">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title">¿Desea agregar este profesor?</h3>
+                    <h3 class="modal-title">¿Desea actualizar los datos?</h3>
                 </div>
                 <div class="modal-body">
                     <p>Los cambios se veran reflejados de manera automatica
@@ -157,11 +157,11 @@
         <modal name="newteacher-added" height="auto">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title">Un nuevo profesor se ha agregado</h3>
+                    <h3 class="modal-title">Actualización exitosa</h3>
                 </div>
                 <div class="modal-body">
                     <p> 
-                        Su profesor ahora esta inscrito en el personal de Posgrados de la facultad de Ingenieria
+                        Los datos del profesor han sido actualizados correctamente
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -204,6 +204,8 @@ export default {
         return {
             id_program:1,
             Program_name:"",
+            degreesToDel:[],
+            achievementsToDel:[],
 
             degree_name:"",
             degree_college:"",
@@ -223,7 +225,7 @@ export default {
             Email:"",
             Firstname:"",
             Lastname:"",
-            ID_teacher:0,
+            ID_teacher:1,
             ID_user:4,
             ID_department:1,
             ID_program:1,
@@ -236,6 +238,35 @@ export default {
     },
     methods:{
         sendNewTeacher(){
+            console.log(this.Teacher.ID_user);
+            for(var i=0; i<this.degreesToDel.length;i++){
+                if(this.degreesToDel[i].ID_degree>0){
+                    axios({
+                        method: 'post',
+                        url: 'http://localhost:8080/delDegree',
+                        withCredentials: true,
+                        crossdomain: true,
+                        data: this.degreesToDel[i],
+                        headers: { 
+                        "Content-Type": "application/x-www-form-urlencoded"
+                        }
+                    });
+                }
+            }
+            for(var i=0; i<this.achievementsToDel.length;i++){
+                if(this.achievementsToDel[i].ID_degree>0){
+                    axios({
+                        method: 'post',
+                        url: 'http://localhost:8080/delDegree',
+                        withCredentials: true,
+                        crossdomain: true,
+                        data: this.achievementsToDel[i],
+                        headers: { 
+                        "Content-Type": "application/x-www-form-urlencoded"
+                        }
+                    });
+                }
+            }
             this.$modal.hide('confirm-newteacher');
             axios({
                 method: 'post',
@@ -260,6 +291,9 @@ export default {
             this.$modal.show('add-achievement')
         },
         addNewDegree : function(){
+            if(this.Teacher.Degrees==null){
+                this.Teacher.Degrees=[]
+            }
             this.Teacher.Degrees.push({ID_degree:-1, ID_teacher:1, Degree_name:this.degree_name, 
             degree_college:this.degree_college, Degree_city:this.degree_city, Degree_year:this.degree_year, Degree_extra_info:this.degree_extra});
             this.isMTDegrees=false;
@@ -271,9 +305,13 @@ export default {
             this.$modal.hide('add-degree');
         },
         delDegree: function(index){
+            this.degreesToDel.push(this.Teacher.Degrees[index]);
             this.Teacher.Degrees.splice(index, 1);
         },
         addNewAchievement : function(){
+            if(this.Teacher.Achievements==null){
+                this.Teacher.Achievements=[]
+            }
             this.Teacher.Achievements.push({ID_achievement:-1, ID_teacher:1, Achievement_name:this.achievement_name, 
                 Achievement_description:this.achievement_description, Achievement_year:this.achievement_year});
             this.isMTAchievements=false;
@@ -283,6 +321,7 @@ export default {
             this.$modal.hide('add-achievement');
         },
         delAchievement:function(index){
+            this.achievementsToDel.push(this.Teacher.Achievements[index]);
             this.Teacher.Achievements.splice(index, 1);
         },
         cancelNewDegree(){
