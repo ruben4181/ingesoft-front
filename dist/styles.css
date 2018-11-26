@@ -47,6 +47,13 @@ body {
     text-decoration: none;
 }
 
+.link-nostyle{
+    text-decoration: none;
+    text-decoration-color: #000;
+    text-emphasis-color: #000;
+    color: #000;
+}
+
 .dropdown {
     float: left;
     overflow: hidden;

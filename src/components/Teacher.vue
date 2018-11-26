@@ -18,7 +18,7 @@
                 </div>
                 <div class="smallcard">
                     <h5>Enviale un e-mail a {{teacher.Firstname}}</h5>
-                    <button class="btn default">Enviar correo</button>
+                    <button class="btn default" @click="sendMessage()">Enviar correo</button>
                 </div>
                 <div class="smallcard">
                     <button class="btn warning"
@@ -95,6 +95,35 @@
                 </div>
             </div>
         </modal>
+        <modal name="send-email" height="auto" :adaptive="true" :scroll="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Enviar un correo a {{teacher.Firstname}} {{teacher.Lastname}}</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>Tu correo electronico</h4>
+                    <textarea-autosize class="textarea-field" style="width:100%;"
+                        v-model="Email.sender" :min-height="20">    
+                    </textarea-autosize>
+                    <h4>Asunto</h4>
+                    <textarea-autosize class="textarea-field" style="width:100%;"
+                        v-model="Email.subject" :min-height="20">    
+                    </textarea-autosize>
+                    <h4>Mensaje</h4>
+                    <textarea-autosize class="textarea-field" style="width:100%;"
+                        v-model="Email.message" :min-height="20">    
+                    </textarea-autosize>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" @click="cancelSendMessage()">
+                        Enviar
+                    </button>
+                    <button class="btn btn-default" @click="cancelSendMessage()">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </modal>
     </div>
 </template>
 <script>
@@ -127,9 +156,20 @@ export default {
             teacher:null,
             Program_name:"",
             id_program:1,
-            rutas:[]
+            rutas:[],
+            Email:{
+                sender:"",
+                subject:"",
+                message:""
+            }
         }
     }, methods:{
+        sendMessage : function(){
+            this.$modal.show('send-email')
+        },
+        cancelSendMessage : function(){
+            this.$modal.hide('send-email')
+        },
         delTeacher : function(){
             this.$modal.hide('confirm-delteacher');
             axios({

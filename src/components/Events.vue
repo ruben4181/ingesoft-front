@@ -33,8 +33,6 @@
         </div>
         <div class="rightcolumn">
             <div class="card">
-            </div>
-            <div class="card">
                 <h2>¿Quieres conocer el plan de estudios?</h2>
                 <p>{{Program_name}} es tu mejor opcion<br>Haz click en el siguiente enlace para 
                 mas informacion acerca del syllabus del programa</p>
@@ -47,7 +45,7 @@
             <div class="card">
                 <h2>Conoce tus futuros docentes</h2>
                 <p>Observa el perfil de los docentes inscritos en {{ Program_name}}</p>
-                <router-link :to="{name:'Teachers', parmas:{ID_program:this.id_program, Program_name:this.Program_name, rutas:this.rutas}}"> 
+                <router-link :to="{name:'Teachers', params:{ID_program:id_program, Program_name:Program_name, rutas:rutas}}">
                     <button class="btn default">Ver Docentes</button>
                 </router-link>
             </div>
@@ -85,7 +83,7 @@ export default {
         getPosts : function(){
             this.id_program=this.$route.params.ID_program;
             this.Program_name=this.$route.params.Program_name;
-            this.rutas.push({name:'Events', params:{ID_program:this.id_program, Program_name:this.Program_name}});
+            this.rutas.push({name:'Events', params:{ID_program:this.id_program, Program_name:this.Program_name, rutas:this.rutas}});
             axios.get(this.urlApi+'getEvents/'+this.id_program).then(response=>(this.events=response.data));
         }
     }

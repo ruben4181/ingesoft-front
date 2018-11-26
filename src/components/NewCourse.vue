@@ -77,8 +77,8 @@ import axios from 'axios';
 
 export default {
     created:function(){
-        this.id_progam=this.$route.params.ID_program;
-        this.Program_name_this.$route.params.Program_name;
+        this.id_program=this.$route.params.ID_program;
+        this.Program_name=this.$route.params.Program_name;
         this.rutas=this.$route.params.rutas;
         var i=0;
         for(i; i<this.rutas.length; i++){
@@ -94,7 +94,7 @@ export default {
     },
     data: function(){
         return{
-            id_progam:1,
+            id_program:1,
             Program_name:"",
             rutas:[],
             Course:{
@@ -111,6 +111,7 @@ export default {
     methods:{
         sendNewCourse(){
             this.$modal.hide('confirm-newcourse');
+            this.Course.ID_program=this.id_program;
             axios({
                 method: 'post',
                 url: 'http://localhost:8080/newCourse',

@@ -16,6 +16,8 @@ import Course from './components/Course.vue';
 import UpdateTeacher from './components/UpdateTeacher.vue';
 import NewCourse from './components/NewCourse.vue';
 import EditCourse from './components/EditCourse.vue';
+import NewProgram from './components/NewProgram.vue';
+import EditProgram from './components/EditProgram.vue';
 
 export default[
     {path:'/', component: Home, name:'Home'},
@@ -35,5 +37,7 @@ export default[
     {path:'/Course', component:Course, name:'Course'},
     {path:'/UpdateTeacher', component:UpdateTeacher, name:'UpdateTeacher'},
     {path:'/NewCourse', component:NewCourse, name:'NewCourse'},
-    {path:'/EditCourse', component:EditCourse, name:'EditCourse'}
+    {path:'/EditCourse', component:EditCourse, name:'EditCourse'},
+    {path:'/NewProgram', component:NewProgram, name:'NewProgram'},
+    {path:'/EditProgram', component:EditProgram, name:'EditProgram'}
 ]
