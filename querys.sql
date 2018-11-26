@@ -5,3 +5,5 @@ create table events(id_event int primary key auto_increment, event_title varchar
 create table courses(id_course int primary key auto_increment, course_name varchar(100), course_description text, course_n_credits int, course_requirements text, id_program int, foreign key(id_program) references programs(id_program));
 create table departments(id_department int primary key auto_increment, department_name varchar(100));
 create table teachers(id_teache int primary key auto_increment, id_user int, id_department, id_program, foreign key(id_user) references users(id_user), foreign key(id_department) references departments(id_department), foreign key(id_program) references programs(id_programs));
+create table achievements(id_achievement int primary key auto_increment, id_teacher int, achievement_name text, achievement_description text, achievement_year date, foreign key(id_teacher) references teachers(id_teacher));
+create table degrees(id_degree int primary key auto_increment, id_teacher int, degree_name varchar(100), degree_college varchar(100), degree_city varchar(100), degree_year date, degree_extra_info text, foreign key(id_teacher) references teachers(id_teacher));
